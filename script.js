@@ -1,8 +1,11 @@
 const input = document.getElementById("input");
 
 const button = document.getElementById("button");
+let index = 0;
 button.addEventListener("click", (e) =>{
   addData(input.value, "2024-12-09", "to-do", "in-progress", "done", "blocked", "./trash.svg")
+  index+=1;
+  console.log(index);
 });
 const containerItems = [
   {
@@ -55,14 +58,14 @@ containerItems.map((item) => {
   addTaskList(item.title, item.color, item.count, item.id);
 });
 let todoData = [
-  // {
-  //   title: "Huvtssaa beldeh",
-  //   dates: "2024-12-09",
-  //   state: "to-do",
-  //   state1: "in-progress",
-  //   state2: "done",
-  //   state3: "blocked",
-  // },
+  {
+    title: "Huvtssaa beldeh",
+    dates: "2024-12-09",
+    state: "to-do",
+    state1: "in-progress",
+    state2: "done",
+    state3: "blocked",
+  },
   // {
   //   title: "Shine jildee yvah",
   //   dates: "2024-12-09",
@@ -104,7 +107,16 @@ let todoData = [
   //   state3: "to-do",
   // },
 ];
-
+const clearContainers = () => {
+  const container1 = document.getElementById("to-do");
+  const container2 = document.getElementById("in-progresss");
+  const container3 = document.getElementById("done");
+  const container4 = document.getElementById("blocked");
+  container1.innerHTML = null;
+  container2.innerHTML = null;
+  container3.innerHTML = null;
+  container4.innerHTML = null;
+};
 function addData(title, dates, state, state1, state2, state3) {
   const todo = document.querySelector(`#${state}`);
   const list = document.createElement("div");
@@ -120,6 +132,8 @@ function addData(title, dates, state, state1, state2, state3) {
   const p = document.createElement("p");
   p.innerText = dates;
   listItem.appendChild(p);
+
+
   const select = document.createElement("select");
   listItem.appendChild(select);
   const option = document.createElement("option");
@@ -140,11 +154,12 @@ function addData(title, dates, state, state1, state2, state3) {
   listItem.appendChild(svg);
 //   const trash = document.getElementById("trash");
 // // const trash = document.getElementById("trash");
-svg.addEventListener("click", (index) =>{
-  todoData.splice(index, 1);
-  console.log(svg);
-  console.log(index);
-  
+svg.addEventListener("click", () =>{
+  todoData.pop(index);
+  clearContainers();
+  containerItems.map((item) => {
+    addTaskList(item.title, item.color, item.count, item.id);
+  });
   });
 }
 todoData.map((item) => {
